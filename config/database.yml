@@ -1,0 +1,17 @@
+development: &defaults
+  adapter: postgresql
+  database: vdwsurveys_dev
+  encoding: unicode
+  username: rails
+  password: 
+
+test: &test
+  <<: *defaults
+  database: vdwsurveys_test
+
+production:
+  <<: *defaults
+  database: vdwsurveys_prod
+
+cucumber:
+  <<: *test

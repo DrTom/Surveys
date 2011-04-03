@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @virtualdesktop.name
+%p
+  %b User:
+  = link_to @virtualdesktop.user.name, user_path(@virtualdesktop.user)
+%p
+  %b Masterimage:
+  = link_to @virtualdesktop.masterimage.name, masterimage_path(@virtualdesktop.masterimage)
+
+= link_to 'Edit', edit_virtualdesktop_path(@virtualdesktop) if @loggedin_user.is_admin
+\|
+= link_to 'Back', virtualdesktops_path

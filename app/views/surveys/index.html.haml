@@ -1,0 +1,28 @@
+%h1 Listing surveys
+
+%table
+  %tr
+    %th Name
+    %th Status
+    %th
+    %th
+    %th
+    %th Change Status
+
+  - @surveys.each do |survey|
+    %tr
+      %td= survey.name
+      %td= survey.status
+      %td= link_to 'Show', survey
+      %td
+        = link_to 'Edit', edit_survey_path(survey)  if survey.editable?
+      %td
+        = link_to 'Destroy', survey, :confirm => 'Are you sure?', :method => :delete if survey.destroyabel? 
+      %td 
+        = link_to 'Open', open_survey_path(survey), :confirm => 'Are you sure?', :method => :post if survey.openable?
+        = link_to 'Close',close_survey_path(survey), :confirm => 'Are you sure?', :method => :post if survey.closeable?
+
+
+%br
+
+= link_to 'New Survey', new_survey_path

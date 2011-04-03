@@ -1,0 +1,19 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @masterimage.name
+
+
+%p
+  %b Virtual Desktops:
+  %ul
+    - @masterimage.virtualdesktops.each do |desk|
+      %li 
+        = link_to desk.name, virtualdesktop_path(desk)
+
+
+
+= link_to 'Edit', edit_masterimage_path(@masterimage) if @loggedin_user.is_admin
+\|
+= link_to 'Master-Images', masterimages_path

@@ -1,0 +1,124 @@
+What it is
+----------
+
+A online survey system for the particular use case of assessing virtual
+workplaces. There are a few particular requirements that make "out 
+of the box" solutions not applicable.
+
+Remarks
+-------
+
+### Database
+
+We use Postgres throughout development, testing and of course
+production. I'm going to discuss Postgres/MySQL, though I can say
+that I have learned the _hard way_. If you anyone needs to make
+that experience too, go for it.
+
+There are models that purely based on SQL-views. There
+is one part, yet to be implemented, where application-logic is
+within a sql-view. Opinions diverge largely on this matter as we
+know. I claim myself to have come to senses with this matter in
+recent years.
+
+### Users, log-in and sessions
+
+In production the whole application is behind apache httpd
+authentication which itself talks to an external directory service.
+
+For tests, there is a simple _login_ controller and a corresponding
+view.  I would suggest to use _devise_ if the application must/should
+provide self-contained user management.
+
+
+### Design
+
+There is no business case for this application to be pretty. So,
+it is not!
+
+
+### Deployment
+
+We deploy and Git and Passenger and run it ourself with RVM and
+Postgres on Linux (Debian derivative). I'd rather recommend to use
+Heroku if one is allowed to do so.
+
+RVM vs. build-in and gem packages: I used to be in favor of packaging
+gems into debs/rpms. I am not anymore. RVM is good enough until
+everybody uses Heroku, EngineYard, or whatever anyways.
+
+Mentionable features and used techniques
+----------------------------------------
+
+### About test
+
+The coverage is not complete. Major aspects are covered.
+
+#### Testing BDD
+
+We use cucumber with capybara and RSpec. The interaction with
+_clients_ is well covered. The interaction for _administrators_ is
+not.
+
+#### Testing models
+
+The major functionality in the models is tested with RSpec.
+
+#### Testing views and controllers
+
+The coverage is by far not complete. The views are largely covered
+by Cucumber tests. Routes and controllers are only tested if there
+is diversion from the rails convention.
+
+
+### Raw SQL - A simple view-model
+
+The model `opensurvey` is based on a sql-view.  This view is defined
+in a migration `create_opensurveys`.
+
+The really tricky part is to set up raw sql-schema definition instead
+of a ruby-schema file, the latter doesn't preserve e.g. views.
+
+
+### Extending routes of resources with custom actions
+
+The surveys resource has the custome actions _open_ and _close_
+which are defined in `config/routes.rb`:
+
+    resources :surveys do
+      post :open, :on => :member
+      post :close, :on => :member
+    end
+
+See the `surveys_controller` and the _index_ view of the same entity
+for further usage.
+
+
+### Custom validation by extending ActiveModel::EachValidator
+
+See the file `lib/immutable_validator.rb` and the model `questionnaire`.
+There are of course also other custom validators.
+
+
+### Transactional insurance of model consistency
+
+There must only be at most one survey having the status set to
+`open` at a time. This is ensured with an `after_save`-hook in the
+corresponding model.
+
+
+### Creating test data with a factory
+
+_factory girl_ is used to create data for testing.  Have a look
+into `spec/fatories.rb` for examples.
+
+Mock objects turned out to be a pain to work with once there are
+intertwined relation between entities (and for other reasons, too).
+Fixtures ain't much better.
+
+
+### Faker
+
+An other helpful gem for testing is _faker_. It conveniently generates
+random data in various formats. However, I just use _rand()_ for
+simple cases, too.

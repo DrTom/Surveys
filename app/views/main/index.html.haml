@@ -1,0 +1,15 @@
+%h1 Developer Workplace Surveys
+
+- if @opensurvey
+
+  The survey "<b>#{@opensurvey.name}</b>" is currently open for submissions.
+
+  Please proceed to the 
+  =link_to 'questionnaires' ,questionnaires_path
+  to submit. 
+
+- else
+
+  There is currently no open survey to submit to.
+
+

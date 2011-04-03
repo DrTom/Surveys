@@ -1,0 +1,44 @@
+
+%table
+  %tr
+    %th User
+    %th Survey
+    %th Desktop
+    %th Perf.Compile.
+    %th Perf.App.
+    %th Sys.Stab.
+    %th RDP.Perf.
+    %th RDP.Stab.
+    %th CPU
+    %th RAM
+    %th C
+    %th D
+    %th Tools
+    %th T.Compl
+    %th Usage %
+    %th Fall-back 
+    %th Final Word
+    
+  %tr
+    %td= @questionnaire.user.name
+    %td= @questionnaire.survey.name
+    %td= @questionnaire.virtualdesktop.name
+    %td= @questionnaire.perf_compile
+    %td= @questionnaire.perf_app
+    %td= @questionnaire.sys_stability
+    %td= @questionnaire.rdp_perf
+    %td= @questionnaire.rdp_stability
+    %td= @questionnaire.conf_num_cpu
+    %td= @questionnaire.conf_size_ram
+    %td= @questionnaire.conf_size_diskc
+    %td= @questionnaire.conf_size_diskd
+    %td= @questionnaire.toolset_general
+    %td= @questionnaire.toolset_completeness
+    %td= @questionnaire.usage
+    %td= @questionnaire.fallback
+    %td= @questionnaire.verdict
+
+
+
+
+= link_to 'Back', questionnaires_path

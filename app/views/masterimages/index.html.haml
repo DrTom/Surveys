@@ -1,0 +1,19 @@
+%h1 Listing masterimages
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+  - @masterimages.each do |masterimage|
+    %tr
+      %td= masterimage.name
+      %td= link_to 'Show', masterimage
+      %td= link_to 'Edit', edit_masterimage_path(masterimage)
+      %td= link_to 'Destroy', masterimage, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Masterimage', new_masterimage_path

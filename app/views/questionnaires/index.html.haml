@@ -1,0 +1,22 @@
+%h1 Questionnaires
+
+%table
+  %tr
+    %th Survey
+    %th Submitted At
+    %th
+  - @user_questionnaires.each do |questionnaire|
+    %tr
+      %td= questionnaire.survey.name
+      %td= questionnaire.updated_at
+      %td
+        = link_to 'Show', questionnaire_path(questionnaire)
+        = link_to 'Edit', edit_questionnaire_path(questionnaire) if questionnaire.survey.open?
+        = link_to 'Destroy', questionnaire, :confirm => 'Are you sure?', :method => :delete if questionnaire.survey.open?
+
+
+= link_to 'Submit New Questionnaire', new_questionnaire_path
+
+%br
+
+

@@ -1,0 +1,9 @@
+%p
+  %b Name:
+  = @survey.name
+  %b Status:
+  = @survey.status
+%p
+= link_to 'Edit', edit_survey_path(@survey) unless @survey.status == "open" or @survey.status == "closed"
+\|
+= link_to 'Back', surveys_path

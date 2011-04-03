@@ -1,0 +1,28 @@
+%p
+  %b Uid:
+  = @user.uid
+
+%p
+  %b Roles
+  %p= "Admin: #{@user.is_admin}"
+  %p= "Client: #{@user.is_client.to_s}"
+  %p= "Manager: #{@user.is_manager}"
+
+%p 
+  %b Virtualdesktops
+  %ul
+  - @user.virtualdesktops.each do |desk|
+    %li 
+      = link_to desk.name, virtualdesktop_path(desk)
+
+%p 
+  %b Questionnaires
+  %ul
+  - @user.questionnaires.each do |q|
+    %li 
+      = link_to q.id, questionnaire_path(q)
+
+
+= link_to 'Edit', edit_user_path(@user)
+\|
+= link_to 'Back', users_path

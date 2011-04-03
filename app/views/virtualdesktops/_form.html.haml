@@ -1,0 +1,13 @@
+= semantic_form_for @virtualdesktop do |f|
+  -if @virtualdesktop.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@virtualdesktop.errors.count, "error")} prohibited this virtualdesktop from being saved:"
+      %ul
+        - @virtualdesktop.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.inputs
+
+  = f.buttons
+
+

@@ -1,0 +1,74 @@
+= semantic_form_for @questionnaire do |f|
+  -if @questionnaire.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@questionnaire.errors.count, "error")} prohibited this questionnaire from being saved:"
+      %ul
+        - @questionnaire.errors.full_messages.each do |msg|
+          %li= msg
+
+  - user= @loggedin_user 
+
+  %fieldset
+    %h2 About
+    = f.input :user, :as => :select, :collection => [[user.uid,user.id]], :include_blank => false
+    = f.input :survey, :include_blank => false
+    = f.input :virtualdesktop, :include_blank => false, :collection => @loggedin_user.virtualdesktops, :hint => "If you own multiple desktops: select the one you use most."
+
+  %fieldset
+    %h2 System and RDP Performance
+    %h3 Value Interpretation
+    %p The rating is given by a number between one and six where <b>one is the worst</b> and <b>six is the best</b> rating.
+    %p Consider the compiling assessment for example: one would be very slow (like a machine 10 years ago) whereas six would be the fastest you have ever experienced.
+
+    %h2 System Performance
+    = f.input :perf_compile, :label => "Compiling and building", :as => :select, :collection => 1..6,  :hint => "As described above."
+    = f.input :perf_app, :label => "Applications",:as => :select, :collection => 1..6,  :hint => "Consider start-up times, reactivity, ..."
+
+    %h2 System Stability 
+    = f.input :sys_stability, :label => "System stability.", :as => :select, :collection => 1..6,  :hint => "Do you experience system crashes, boot problems? Rate with 6 if it is stable as a rock."
+
+    %h2 Remote Desktop Connection
+    = f.input :rdp_perf, :label => "Performance",:as => :select, :collection => 1..6,  :hint => 'Can you "feel" the difference to your local machine? Does the UI stutter in any way? Does it constrain you in productivity?'
+    = f.input :rdp_stability, :label => "Stability", :as => :select, :collection => 1..6,  :hint => "Does the connection ever break down and require you to reconnect?"
+
+  %fieldset
+    %h2 Resources Configuration
+    %p Assess if the resources given are sufficient to perform your work efficiently.
+    = f.input :conf_num_cpu, :as => :radio, :label => "Number of CPUs", :collection => [["Sufficient.", true], ["Both CPUs reach 100% usage frequently for a sustained period of time.", false]]
+    = f.input :conf_size_ram, :as => :radio, :label => "Size of RAM", :collection => [["Sufficient.", true], ["The system swaps to disk.  I am limited in the number of applications I can run in parallel.", false]]
+    = f.input :conf_size_diskc, :as => :radio, :label => "Size of Disk C", :collection => [["Sufficient.", true], ["The disk is practically full. I am wasting my work time by  organizing and cleaning data.", false]]
+    = f.input :conf_size_diskd, :as => :radio, :label => "Size of Disk D", :collection => [["Sufficient.", true], ["The disk is practically full. I am wasting my work time by  organizing and cleaning data.", false]]
+
+  %fieldset
+    %h2 Toolset
+    %p Your system comes with a pre installed toolset. Is this generally a good thing.
+    = f.input :toolset_general, :as => :radio, :label => "Toolset", :collection => [["Yes", true], ["No, I'd rather install everything by myself.", false]]
+    %p How complete was the predefined toolset?
+    = f.input :toolset_completeness, :as => :radio, :label => "Toolset", :collection => [["Fair, I added only a minimal number of tools if any at all.", true], ["The given toolset was not very complete. It took considerable effort and time to add software.", false]]
+
+    
+  %fieldset
+    %h2 Usage 
+    %p Do you still use your other machine (e.g. laptop) for development?  In total how much do you use the virtual desktop for programming tasks?
+    = f.input :usage, :label => "Usage %", :as => :select, :collection => (0..100).step(10)
+
+  %fieldset
+    %h2 Fall-back system
+  
+    %p Do you maintain your other machine with a complete toolset? Could you switch immediately without loss of time if your virtual desktop would not be available for some hours? 
+    = f.input :fallback, :label => "Fallback available?", :as => :radio, :collection =>[["No, I trust this is not necessary.",false],["Yes, I am not dependent on the virtual environment",true]] 
+   
+
+  %fieldset
+    %h2 Verdict
+    %p Would you recommend other software engineers to switch to the virtual environment or not?
+    = f.input :verdict, :as => :radio, :label => "Recommendation:", :collection => [["Yes, it is worthwhile using the virtual enviroment.", true], ["No, stick to your hardware.", false]]
+    %p Expand on your statement if you answer with "No".
+
+
+  %fieldset
+    %h2 Comment
+    %p How could we improve your virtual desktop? Is there something else we should know? 
+    = f.input :comment, :label => "", :as => :text
+   
+  = f.buttons

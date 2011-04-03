@@ -1,0 +1,23 @@
+%h1 Listing virtualdesktops
+
+%table
+  %tr
+    %th Name
+    %th User
+    %th Masterimage
+    %th
+    %th
+    %th
+
+  - @virtualdesktops.each do |virtualdesktop|
+    %tr
+      %td= virtualdesktop.name
+      %td= virtualdesktop.user.name
+      %td= virtualdesktop.masterimage.name
+      %td= link_to 'Show', virtualdesktop
+      %td= link_to 'Edit', edit_virtualdesktop_path(virtualdesktop)
+      %td= link_to 'Destroy', virtualdesktop, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Virtualdesktop', new_virtualdesktop_path
