@@ -2,19 +2,11 @@
 -- PostgreSQL database dump
 --
 
-SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET escape_string_warning = off;
-
---
--- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
---
-
-CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
-
 
 SET search_path = public, pg_catalog;
 
@@ -39,10 +31,9 @@ CREATE TABLE masterimages (
 --
 
 CREATE SEQUENCE masterimages_id_seq
-    START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -111,8 +102,8 @@ CREATE TABLE questionnaires (
 CREATE SEQUENCE questionnaires_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -137,10 +128,9 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE SEQUENCE surveys_id_seq
-    START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -171,10 +161,9 @@ CREATE TABLE users (
 --
 
 CREATE SEQUENCE users_id_seq
-    START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -204,10 +193,9 @@ CREATE TABLE virtualdesktops (
 --
 
 CREATE SEQUENCE virtualdesktops_id_seq
-    START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -359,8 +347,6 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 --
 -- PostgreSQL database dump complete
 --
-
-INSERT INTO schema_migrations (version) VALUES ('20110316082803');
 
 INSERT INTO schema_migrations (version) VALUES ('20110314111300');
 

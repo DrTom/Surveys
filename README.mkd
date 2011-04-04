@@ -11,15 +11,10 @@ Remarks
 ### Database
 
 We use Postgres throughout development, testing and of course
-production. I'm going to discuss Postgres/MySQL, though I can say
-that I have learned the _hard way_. If you anyone needs to make
-that experience too, go for it.
+production. 
 
-There are models that purely based on SQL-views. There
-is one part, yet to be implemented, where application-logic is
-within a sql-view. Opinions diverge largely on this matter as we
-know. I claim myself to have come to senses with this matter in
-recent years.
+There are models that purely based on SQL-views. There is one part,
+yet to be implemented, where application-logic is within a sql-view.
 
 ### Users, log-in and sessions
 

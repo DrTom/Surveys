@@ -11,12 +11,12 @@ class ApplicationController < ActionController::Base
   #  => correct function w.h.p.
   
   def authenticate
-    session[:uid] = request.env['REMOTE_USER'] if request.env['REMOTE_USER']
+    session[:uid] = (request.env['REMOTE_USER']).downcase if request.env['REMOTE_USER']
     redirect_to login_url, :notice => "you must log in" if not session[:uid]
   end
 
   def setuser
-    @loggedin_user = User.find_or_create_by_uid(request.env['REMOTE_USER'])  if request.env['REMOTE_USER']
+    @loggedin_user = User.find_or_create_by_uid((request.env['REMOTE_USER']).downcase)  if request.env['REMOTE_USER']
     @loggedin_user = User.find_by_uid(session[:uid]) if not @loggedin_user and session[:uid]
     @loggedin_user = User.find_or_create_by_uid(:uid => "guest", :is_client => false) if not @loggedin_user
    end
