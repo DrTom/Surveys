@@ -1,0 +1,85 @@
+%style{:type => "text/css"}
+  :sass
+    .legend
+      *
+        font-size: 75%
+    table
+      tr
+        th 
+          border-right: 1px dashed #000000 
+          border-bottom: 1px double #000000 
+        td 
+          padding: 5px 10px
+          border-right: 1px dashed #000000
+          border-bottom: 1px solid #000000 
+
+.legend
+  %h3 Legend:
+  %ul 
+    %li #: Number of questionnaires
+    %li PC: Performance compilation
+    %li PA: Performance applications 
+    %li SS: Stability system
+    %li PR: Performance RDP 
+    %li PS: Stability RDP 
+    %li CPU: Sufficiency CPU
+    %li R: Sufficiency RAM
+    %li DC: Sufficiency size disk C
+    %li DD: Sufficiency size disk C
+    %li GT: Appreciation toolset
+    %li CT: Completeness toolset
+    %li USE: Usage virtual (vs. other machine)
+    %li FB: Fall-back environment available
+  %p In the case of a summary the booleans are counted and reported as a fraction in percent.
+
+
+%table 
+  %tr
+    - report = reports.first
+    %th= "Survey" if report and report.survey
+    -if report and report.respond_to? :user
+      %th= "User" 
+    -if report and report.respond_to? :count
+      %th= "#"     
+    -if report and  report.respond_to? :virtualdesktop
+      %th= "Desk"     
+    %th PC
+    %th PA
+    %th SS
+    %th PR
+    %th SR
+    %th CPU
+    %th R
+    %th DC
+    %th DD
+    %th GT
+    %th CT
+    %th USE
+    %th FB 
+    %th V
+
+  - reports.each do |report|
+    %tr
+      %td.survey= link_to report.survey.name, report_path(report.survey)  if report.survey
+      -if report.respond_to? :user
+        %td.user= report.user.name 
+      -if report.respond_to? :virtualdesktop
+        %td= report.virtualdesktop.name 
+      -if report.respond_to? :count
+        %td= report.count 
+      %td= report.perf_compile
+      %td= report.perf_app
+      %td= report.sys_stability
+      %td= report.rdp_perf
+      %td= report.rdp_stability
+      %td= report.conf_num_cpu
+      %td= report.conf_size_ram
+      %td= report.conf_size_diskc
+      %td= report.conf_size_diskd
+      %td= report.toolset_general
+      %td= report.toolset_completeness
+      %td= report.usage
+      %td= report.fallback
+      %td= report.verdict
+
+

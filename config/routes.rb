@@ -1,5 +1,6 @@
 VDWSurveys::Application.routes.draw do
 
+
   resources :virtualdesktops
 
   resources :masterimages
@@ -25,6 +26,12 @@ VDWSurveys::Application.routes.draw do
   controller :main do
     get 'main' => :index
   end
+
+  resources :reports
+#  controller :reports do
+#    get 'reports' => :index
+#    get 'reports/:id'=> :show
+#  end
 
   resources :users
 

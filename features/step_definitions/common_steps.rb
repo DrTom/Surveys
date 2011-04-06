@@ -93,3 +93,14 @@ Then /^I should only see exactly one questionnaire$/ do
 end
 
 
+Given /^a set of submitted questionnaires$/ do
+  (1..2).each do |i| 
+    s = Factory(:open_survey)
+    (1..2).each do 
+      Factory(:valid_questionnaire,:survey => s) 
+    end
+    s.close!
+    s.save
+  end
+end
+

@@ -2,11 +2,19 @@
 -- PostgreSQL database dump
 --
 
+SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET escape_string_warning = off;
+
+--
+-- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
+--
+
+CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
+
 
 SET search_path = public, pg_catalog;
 
@@ -31,9 +39,10 @@ CREATE TABLE masterimages (
 --
 
 CREATE SEQUENCE masterimages_id_seq
+    START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -102,8 +111,8 @@ CREATE TABLE questionnaires (
 CREATE SEQUENCE questionnaires_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -112,6 +121,14 @@ CREATE SEQUENCE questionnaires_id_seq
 --
 
 ALTER SEQUENCE questionnaires_id_seq OWNED BY questionnaires.id;
+
+
+--
+-- Name: reportbysurveys; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW reportbysurveys AS
+    SELECT questionnaires.survey_id AS id, questionnaires.survey_id, count(*) AS count, round(avg(questionnaires.perf_compile), 1) AS perf_compile, round(avg(questionnaires.perf_app), 1) AS perf_app, round(avg(questionnaires.sys_stability), 1) AS sys_stability, round(avg(questionnaires.rdp_perf), 1) AS rdp_perf, round(avg(questionnaires.rdp_stability), 1) AS rdp_stability, round((((((sum((questionnaires.conf_num_cpu)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS conf_num_cpu, round((((((sum((questionnaires.conf_size_ram)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS conf_size_ram, round((((((sum((questionnaires.conf_size_diskc)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS conf_size_diskc, round((((((sum((questionnaires.conf_size_diskd)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS conf_size_diskd, round((((((sum((questionnaires.toolset_general)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS toolset_general, round((((((sum((questionnaires.toolset_completeness)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS toolset_completeness, round(avg(questionnaires.usage), 0) AS usage, round((((((sum((questionnaires.fallback)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS fallback, round((((((sum((questionnaires.verdict)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS verdict FROM questionnaires GROUP BY questionnaires.survey_id ORDER BY questionnaires.survey_id;
 
 
 --
@@ -128,9 +145,10 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE SEQUENCE surveys_id_seq
+    START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -161,9 +179,10 @@ CREATE TABLE users (
 --
 
 CREATE SEQUENCE users_id_seq
+    START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -193,9 +212,10 @@ CREATE TABLE virtualdesktops (
 --
 
 CREATE SEQUENCE virtualdesktops_id_seq
+    START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -348,6 +368,8 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 -- PostgreSQL database dump complete
 --
 
+INSERT INTO schema_migrations (version) VALUES ('20110316082803');
+
 INSERT INTO schema_migrations (version) VALUES ('20110314111300');
 
 INSERT INTO schema_migrations (version) VALUES ('20110314120152');
@@ -361,3 +383,5 @@ INSERT INTO schema_migrations (version) VALUES ('20110327052558');
 INSERT INTO schema_migrations (version) VALUES ('20110329164249');
 
 INSERT INTO schema_migrations (version) VALUES ('20110403171948');
+
+INSERT INTO schema_migrations (version) VALUES ('20110405090945');

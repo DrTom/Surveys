@@ -5,6 +5,21 @@ A online survey system for the particular use case of assessing virtual
 workplaces. There are a few particular requirements that make "out 
 of the box" solutions not applicable.
 
+It is programmed as a _ruby on rails 3_ webapplication.
+
+### Entities
+
+There are _users_, _surveys_, _questionnaires, _virtualdesktops_
+and _masterimages_. The relations should be rather obvious.
+
+### Roles
+
+There exists three roles:
+
+1. _clients_ submit questionnaires,
+2. _admins_ administrate everything, and
+3. _managers_ can view the reports generated from the results.
+
 Remarks
 -------
 
@@ -13,8 +28,14 @@ Remarks
 We use Postgres throughout development, testing and of course
 production. 
 
-There are models that purely based on SQL-views. There is one part,
-yet to be implemented, where application-logic is within a sql-view.
+There are models that purely based on SQL-views. The computation
+for the reports is done within  the database (by simple SQL and
+using existing functions) and modeled as a sql-view, too.
+
+This will run as it is on Postgres only. It could be made to run
+on MySQL with a little bit of more effort. I don't know how
+difficult/easy it would be to adopt it for sqlite.
+
 
 ### Users, log-in and sessions
 
@@ -52,8 +73,8 @@ The coverage is not complete. Major aspects are covered.
 #### Testing BDD
 
 We use cucumber with capybara and RSpec. The interaction with
-_clients_ is well covered. The interaction for _administrators_ is
-not.
+_clients_ and _managers_ is well covered. The interaction for
+_administrators_ is not.
 
 #### Testing models
 

@@ -30,6 +30,10 @@ def randb
   rand(2)==0 ? true : false
 end
 
+Factory.sequence :rb do |n|
+  n
+end
+
 # Requirements get a bit in the way here. Consider to reuse
 # a previous survey if many Questionnaires are created:
 #
@@ -43,27 +47,27 @@ Factory.define :valid_questionnaire, :class => Questionnaire do |f|
 
   f.loggedin_user {|a| a.user}
 
-  f.perf_compile rand(6)+1
-  f.perf_app  rand(6)+1
+  f.perf_compile {rand(6)+1}
+  f.perf_app  {rand(6)+1}
 
-  f.sys_stability rand(6)+1
+  f.sys_stability {rand(6)+1}
 
-  f.rdp_perf  rand(6)+1
-  f.rdp_stability  rand(6)+1
+  f.rdp_perf  {rand(6)+1}
+  f.rdp_stability  {rand(6)+1}
 
-  f.conf_num_cpu  randb
-  f.conf_size_ram  randb
-  f.conf_size_diskc  randb
-  f.conf_size_diskd  randb
+  f.conf_num_cpu  {randb}
+  f.conf_size_ram  {randb}
+  f.conf_size_diskc  {randb}
+  f.conf_size_diskd  {randb}
 
-  f.toolset_general  randb
-  f.toolset_completeness  randb
+  f.toolset_general  {randb}
+  f.toolset_completeness  {randb}
 
-  f.usage  rand(11)*10
-  f.fallback randb
+  f.usage  {rand(11)*10}
+  f.fallback {randb}
 
-  f.verdict  randb
+  f.verdict  {randb}
 
-  f.comment  Faker::Lorem.sentences(3).join(" ")
+  f.comment  {Faker::Lorem.sentences(3).join(" ")}
 
 end

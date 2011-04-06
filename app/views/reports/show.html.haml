@@ -1,0 +1,32 @@
+.summary 
+  .summary_survey
+    %h1= "Summary for #{@reportbysurvey.survey.name}"
+
+    = render 'reporttable', :reports => [@reportbysurvey]
+
+.summary
+  .summary_images
+    %h2 Summary by Master-Image
+
+    %b TODO
+
+.individual
+  %h2 Individual Reports
+
+  = render 'reporttable', :reports => @questionnaires
+
+.comments
+  %h3 Comments
+
+  %ul
+    - @questionnaires.each do |q|
+      - if q.comment and q.comment.length > 0
+        %li
+          %b= q.user.name 
+          for
+          %b= q.virtualdesktop.name+":"
+          %cite= q.comment
+
+
+
+

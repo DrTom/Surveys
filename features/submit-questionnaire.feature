@@ -46,7 +46,6 @@ Feature: Submitting and Handling Questionnaire for Clients
     Then I should see a link "Destroy"
     When I follow "Destroy"
     And I acknowledge the prompt
-    Then show me the page
     Then I should see "Questionnaire was successfully destroyed."
 
   Scenario: Client sees only "Show" for questionnaire of a closed survey 

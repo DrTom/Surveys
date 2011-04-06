@@ -1,6 +1,7 @@
 class Survey < ActiveRecord::Base
 
   validates_uniqueness_of :name
+  has_many :questionnaires
 
   after_save :ensure_at_most_one_survey_is_open
 
