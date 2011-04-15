@@ -1,4 +1,14 @@
 class VirtualdesktopsController < ApplicationController
+
+
+  def rundown
+    @virtualdesktop = Virtualdesktop.find(params[:id])
+    @virtualdesktop.rundown!
+    flash[:notice] = "Virtualdesktop #{@virtualdesktop.name} is down."
+    redirect_to virtualdesktop_url(@virtualdesktop)
+  end
+
+
   # GET /virtualdesktops
   # GET /virtualdesktops.xml
   def index
@@ -69,15 +79,15 @@ class VirtualdesktopsController < ApplicationController
     end
   end
 
-  # DELETE /virtualdesktops/1
-  # DELETE /virtualdesktops/1.xml
-  def destroy
-    @virtualdesktop = Virtualdesktop.find(params[:id])
-    @virtualdesktop.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(virtualdesktops_url) }
-      format.xml  { head :ok }
-    end
-  end
+#  # DELETE /virtualdesktops/1
+#  # DELETE /virtualdesktops/1.xml
+#  def destroy
+#    @virtualdesktop = Virtualdesktop.find(params[:id])
+#    @virtualdesktop.destroy
+#
+#    respond_to do |format|
+#      format.html { redirect_to(virtualdesktops_url) }
+#      format.xml  { head :ok }
+#    end
+#  end
 end

@@ -5,18 +5,21 @@
     %th Name
     %th User
     %th Masterimage
+    %th Status
     %th
     %th
     %th
 
+
   - @virtualdesktops.each do |virtualdesktop|
     %tr
       %td= virtualdesktop.name
-      %td= virtualdesktop.user.name
+      %td= virtualdesktop.down? ? "-" : virtualdesktop.user.name 
       %td= virtualdesktop.masterimage.name
+      %td= virtualdesktop.down? ? "down" : "running"
       %td= link_to 'Show', virtualdesktop
       %td= link_to 'Edit', edit_virtualdesktop_path(virtualdesktop)
-      %td= link_to 'Destroy', virtualdesktop, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to 'Rundown', rundown_virtualdesktop_path(virtualdesktop), :confirm => 'Are you sure?', :method => :post
 
 %br
 

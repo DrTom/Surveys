@@ -1,0 +1,17 @@
+%h1 Notify Users
+
+%p= "This page contains links or actions to users that own a virtualdesktop but did not yet submit to the currently open survey #{@opensurvey.name}."
+  
+.email
+  %h2 Email 
+  .mailto
+    -if @opensurvey
+      %a{:href=>"mailto: #{@notifyusers.map{|user| user.uid}.join(';')} ?subject=Reminder #{@opensurvey.name}"} Send an eMail to all.
+    -else
+      %p There is no open survey at this time.
+
+.list
+  %h2 List
+  %ol
+    - @notifyusers.each do |notifyuser|
+      %li= link_to notifyuser.user.name, user_path(notifyuser.user)

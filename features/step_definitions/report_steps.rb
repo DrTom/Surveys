@@ -16,8 +16,8 @@ end
 
 Then /^I should see the Comments$/ do
   page.should have_content("Comments")
-  page.should have_content("Client-1 for vd-1")
-  page.should have_content("Client-2 for vd-2")
+  page.should have_content("Client-11 for vd-11")
+  page.should have_content("Client-12 for vd-12")
 end
 
 

@@ -1,11 +1,13 @@
 VDWSurveys::Application.routes.draw do
 
+  resources :notifyusers do
+  end
 
-  resources :virtualdesktops
+  resources :virtualdesktops do
+    post :rundown, :on => :member
+  end
 
   resources :masterimages
-
-  resources :virtual_desktops
 
   resources :master_images
 

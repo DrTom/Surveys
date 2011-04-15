@@ -22,7 +22,6 @@ client = User.find_or_create_by_uid({:uid => "client", :is_client=> true})
 master = Masterimage.find_or_create_by_name({:name => "TestMaster"})
 Virtualdesktop.find_or_create_by_name({:name=>"TestDesk",:user => client,:masterimage => master})
 
-
 (1..2).each do
   s = Factory(:open_survey)
   (1..2).each do 
@@ -32,3 +31,5 @@ Virtualdesktop.find_or_create_by_name({:name=>"TestDesk",:user => client,:master
   s.save
 end
 
+s = Factory(:open_survey)
+Factory(:valid_questionnaire,:survey => s,:user => User.first()) 

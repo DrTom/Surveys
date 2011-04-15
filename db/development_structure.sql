@@ -105,6 +105,44 @@ CREATE TABLE questionnaires (
 
 
 --
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    is_admin boolean DEFAULT false,
+    is_client boolean DEFAULT true,
+    is_manager boolean DEFAULT false,
+    uid character varying(255) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: virtualdesktops; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE virtualdesktops (
+    id integer NOT NULL,
+    name character varying(255),
+    user_id integer,
+    masterimage_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    rundown timestamp without time zone
+);
+
+
+--
+-- Name: notifyusers; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW notifyusers AS
+    SELECT users.id, users.uid, users.id AS user_id FROM users WHERE ((NOT (users.id IN (SELECT DISTINCT questionnaires.user_id FROM (questionnaires JOIN opensurveys ON ((questionnaires.survey_id = opensurveys.id))) ORDER BY questionnaires.user_id))) AND (users.id IN (SELECT DISTINCT users.id AS user_id FROM (users JOIN virtualdesktops ON ((users.id = virtualdesktops.user_id))) ORDER BY users.id)));
+
+
+--
 -- Name: questionnaires_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -160,21 +198,6 @@ ALTER SEQUENCE surveys_id_seq OWNED BY surveys.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE users (
-    id integer NOT NULL,
-    is_admin boolean DEFAULT false,
-    is_client boolean DEFAULT true,
-    is_manager boolean DEFAULT false,
-    uid character varying(255) NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -191,20 +214,6 @@ CREATE SEQUENCE users_id_seq
 --
 
 ALTER SEQUENCE users_id_seq OWNED BY users.id;
-
-
---
--- Name: virtualdesktops; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE virtualdesktops (
-    id integer NOT NULL,
-    name character varying(255),
-    user_id integer,
-    masterimage_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
 
 
 --
@@ -385,3 +394,7 @@ INSERT INTO schema_migrations (version) VALUES ('20110329164249');
 INSERT INTO schema_migrations (version) VALUES ('20110403171948');
 
 INSERT INTO schema_migrations (version) VALUES ('20110405090945');
+
+INSERT INTO schema_migrations (version) VALUES ('20110409101201');
+
+INSERT INTO schema_migrations (version) VALUES ('20110412193013');

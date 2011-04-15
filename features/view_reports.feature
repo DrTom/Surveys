@@ -1,4 +1,4 @@
-Feature: Viewieng Reports
+Feature: Viewing Reports
 
   So that we can intepret the turned in reports
   A manager must be able to view the results
@@ -16,4 +16,5 @@ Feature: Viewieng Reports
     Then I should see the survey summary for "Survey-1"
     #    Then I should see the masterimage summary for "I don't know yet"
     Then I should see the Individual Reports 
+    Then show me the page
     Then I should see the Comments

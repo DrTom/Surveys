@@ -11,6 +11,11 @@ Given /^a virtualdesktop "([^"]*)" assigned to the client "([^"]*)" and to the m
   desk = Virtualdesktop.find_or_create_by_name(:name => desk_name, :user => client, :masterimage => master)
 end
 
+Given /^a masterimage "([^"]*)"$/ do |master_name|
+  master = Masterimage.find_or_create_by_name(:name => master_name)
+end
+
+
 Given /^a submitted questionnaire for the user "([^"]*)", the survey "([^"]*)" and the virtualdesktop "([^"]*)"$/ do |user_name,survey_name, desk_name|
   client = User.find_or_create_by_uid(:uid => user_name)
   survey = Survey.find_or_create_by_name(:name => survey_name)
@@ -95,12 +100,21 @@ end
 
 Given /^a set of submitted questionnaires$/ do
   (1..2).each do |i| 
-    s = Factory(:open_survey)
-    (1..2).each do 
-      Factory(:valid_questionnaire,:survey => s) 
+    s = Factory(:open_survey,:name=>"Survey-#{i}")
+    (1..2).each do |j|
+      client = Factory(:client,:uid=>"Client-#{i}#{j}")
+      vd = Factory(:vd,:name=>"vd-#{i}#{j}",:user=>client)
+      Factory(:valid_questionnaire,:survey => s,:user => client,:virtualdesktop=>vd) 
     end
     s.close!
     s.save
   end
+end
+
+
+Given /^a set of users with desktops$/ do
+  s = Factory(:open_survey)
+  Factory(:vd) #  constructs user with it
+  Factory(:vd) #  constructs user with it
 end
 

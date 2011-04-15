@@ -20,6 +20,13 @@ There exists three roles:
 2. _admins_ administrate everything, and
 3. _managers_ can view the reports generated from the results.
 
+
+
+### Status
+
+The application is 90% feature complete. There is one thing 
+in the reports missing.
+
 Remarks
 -------
 
@@ -27,6 +34,9 @@ Remarks
 
 We use Postgres throughout development, testing and of course
 production. 
+
+
+#### Views
 
 There are models that purely based on SQL-views. The computation
 for the reports is done within  the database (by simple SQL and
@@ -36,6 +46,16 @@ This will run as it is on Postgres only. It could be made to run
 on MySQL with a little bit of more effort. I don't know how
 difficult/easy it would be to adopt it for sqlite.
 
+
+#### Views and Subqueries
+
+The model _notifyuser_ is based on a view which iself is defined
+by so called _subqueries_. I wrote a [post](http://dr.th.schank.ch/blog/posts/24e2) 
+about this and you might want to consult it for details. 
+
+The summary is that subqueries make the code very concise yet clear
+and readable. Summaries are available in ProstgreSQL and Oracle
+only.
 
 ### Users, log-in and sessions
 
@@ -98,7 +118,7 @@ of a ruby-schema file, the latter doesn't preserve e.g. views.
 
 ### Extending routes of resources with custom actions
 
-The surveys resource has the custome actions _open_ and _close_
+The surveys resource has the custom actions _open_ and _close_
 which are defined in `config/routes.rb`:
 
     resources :surveys do

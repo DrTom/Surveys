@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe QuestionnairesController do
 
-
   context "authorize before filter" do
     it "should allow clients to access the page" do
       c1 = Factory(:client)

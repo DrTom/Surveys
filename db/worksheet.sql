@@ -34,13 +34,57 @@ delete from virtualdesktops;
 
 delete from masterimages; delete from questionnaires; delete from surveys; delete from users; delete from virtualdesktops;
 
+-- Email Feature
+
+-- ####### implementation with views and joins 
+
+-- all users which have a virtual desktop
+CREATE VIEW active_users AS 
+  select DISTINCT users.id as user_id from users 
+  JOIN virtualdesktops ON users.id = virtualdesktops.user_id ORDER BY user_id;
+select * from active_users;
+
+-- all users which have submitted to the currently open survey
+CREATE VIEW users_with_current_submissions AS 
+  select DISTINCT user_id from questionnaires 
+  JOIN opensurveys 
+    ON questionnaires.survey_id = opensurveys.id ORDER BY user_id;
+select * from users_with_current_submissions;
+
+-- status
+CREATE VIEW current_submission_status AS 
+  select active_users.user_id as id, active_users.user_id as user_id, (users_with_current_submissions.user_id is NOT NULL) as sumbitted from active_users 
+  LEFT OUTER JOIN users_with_current_submissions 
+    ON active_users.user_id = users_with_current_submissions.user_id;
+
+select * from current_submission_status; 
+
+DROP VIEW users_wosubm_and_desk;
+
+CREATE VIEW users_wosubm_and_desk AS 
+  select users.id, users.uid from users 
+  JOIN current_submission_status 
+    ON users.id = current_submission_status.id AND current_submission_status.sumbitted is false;
+
+select * from users_wosubm_and_desk;
+
+----- ########## with subqueries
+
+CREATE VIEW notifyusers AS
+  select users.id, users.uid, users.id as user_id from users WHERE id NOT IN 
+    -- SUBQUERY all users which have submitted to the currently open survey
+    (select DISTINCT user_id from questionnaires JOIN opensurveys ON questionnaires.survey_id = opensurveys.id ORDER BY user_id) 
+   AND id IN
+    -- SUBQUERY all users which have a virtual desktop
+    (select DISTINCT users.id as user_id from users JOIN virtualdesktops ON users.id = virtualdesktops.user_id ORDER BY user_id) ;
+
+select * from notifyusers;
 
 -- Analytics 
 
 select * from questionnaires;
 
 select questionnaires.id, avg(perf_compile) as perf_compile from questionnaires;
-
 
 SELECT 
   survey_id as id,

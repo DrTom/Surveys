@@ -24,6 +24,7 @@
   - if @loggedin_user
     = link_to :Masterimages, masterimages_path if @loggedin_user.is_admin
     = link_to :Reports, reports_path if @loggedin_user.is_manager
+    = link_to "Notify users", notifyusers_path if @loggedin_user.is_manager
     = link_to :Surveys, surveys_path if @loggedin_user.is_admin
     = link_to :Users, users_path if @loggedin_user.is_admin
     = link_to :Virtualdesktops, virtualdesktops_path if @loggedin_user.is_admin
