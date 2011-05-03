@@ -18,18 +18,25 @@ srand(0)
   User.find_or_create_by_uid(args)
 end
 
-client = User.find_or_create_by_uid({:uid => "client", :is_client=> true})
-master = Masterimage.find_or_create_by_name({:name => "TestMaster"})
-Virtualdesktop.find_or_create_by_name({:name=>"TestDesk",:user => client,:masterimage => master})
 
-(1..2).each do
-  s = Factory(:open_survey)
-  (1..2).each do 
-    Factory(:valid_questionnaire,:survey => s) 
-  end
+master1 = Factory(:master,:name=>"Master1")
+master2 = Factory(:master,:name=>"Master2")
+
+(1..2).each do |i| 
+  s = Factory(:open_survey,:name=>"Survey-#{i}")
+    m = master1
+    (1..2).each do |j|
+      client = Factory(:client,:uid=>"Client-#{i}#{j}#{m.name}")
+      vd = Factory(:vd,:name=>"vd-#{i}#{j}#{m.name}",:user=>client,:masterimage=>m)
+      Factory(:valid_questionnaire,:survey => s,:user => client,:virtualdesktop=>vd) 
+    end
+    m = master2
+    (3..5).each do |j|
+      client = Factory(:client,:uid=>"Client-#{i}#{j}#{m.name}")
+      vd = Factory(:vd,:name=>"vd-#{i}#{j}#{m.name}",:user=>client,:masterimage=>m)
+      Factory(:valid_questionnaire,:survey => s,:user => client,:virtualdesktop=>vd) 
+    end
   s.close!
   s.save
 end
 
-s = Factory(:open_survey)
-Factory(:valid_questionnaire,:survey => s,:user => User.first()) 

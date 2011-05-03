@@ -21,11 +21,9 @@ There exists three roles:
 3. _managers_ can view the reports generated from the results.
 
 
-
 ### Status
 
-The application is 90% feature complete. There is one thing 
-in the reports missing.
+The application is complete.
 
 Remarks
 -------
@@ -38,13 +36,16 @@ production.
 
 #### Views
 
-There are models that purely based on SQL-views. The computation
-for the reports is done within  the database (by simple SQL and
-using existing functions) and modeled as a sql-view, too.
+There exist models which are purely based on SQL-views. E.g. the computation
+of the reports is done within the database (by simple SQL and
+using existing functions) and modeled as a sql-view.
 
 This will run as it is on Postgres only. It could be made to run
 on MySQL with a little bit of more effort. I don't know how
 difficult/easy it would be to adopt it for sqlite.
+
+The really tricky part is to set up raw sql-schema definition instead
+of a ruby-schema file, the latter doesn't preserve e.g. views.
 
 
 #### Views and Subqueries
@@ -79,9 +80,6 @@ We deploy and Git and Passenger and run it ourself with RVM and
 Postgres on Linux (Debian derivative). I'd rather recommend to use
 Heroku if one is allowed to do so.
 
-RVM vs. build-in and gem packages: I used to be in favor of packaging
-gems into debs/rpms. I am not anymore. RVM is good enough until
-everybody uses Heroku, EngineYard, or whatever anyways.
 
 Mentionable features and used techniques
 ----------------------------------------
@@ -104,17 +102,7 @@ The major functionality in the models is tested with RSpec.
 
 The coverage is by far not complete. The views are largely covered
 by Cucumber tests. Routes and controllers are only tested if there
-is diversion from the rails convention.
-
-
-### Raw SQL - A simple view-model
-
-The model `opensurvey` is based on a sql-view.  This view is defined
-in a migration `create_opensurveys`.
-
-The really tricky part is to set up raw sql-schema definition instead
-of a ruby-schema file, the latter doesn't preserve e.g. views.
-
+is diversion from the default rails convention.
 
 ### Extending routes of resources with custom actions
 

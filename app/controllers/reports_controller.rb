@@ -13,6 +13,7 @@ class ReportsController < ApplicationController
 
   def show
     @reportbysurvey = Reportbysurvey.find_by_id(params[:id])
+    @reportbysurveybymasterimages = Reportbysurveybymasterimage.find_all_by_id(params[:id])
     @questionnaires = @reportbysurvey.survey.questionnaires
   end
 

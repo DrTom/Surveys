@@ -34,9 +34,10 @@ delete from virtualdesktops;
 
 delete from masterimages; delete from questionnaires; delete from surveys; delete from users; delete from virtualdesktops;
 
--- Email Feature
+-- ## Email Feature
 
--- ####### implementation with views and joins 
+
+-- ### implementation with views and joins 
 
 -- all users which have a virtual desktop
 CREATE VIEW active_users AS 
@@ -68,7 +69,7 @@ CREATE VIEW users_wosubm_and_desk AS
 
 select * from users_wosubm_and_desk;
 
------ ########## with subqueries
+----- ### with subqueries
 
 CREATE VIEW notifyusers AS
   select users.id, users.uid, users.id as user_id from users WHERE id NOT IN 
@@ -80,11 +81,15 @@ CREATE VIEW notifyusers AS
 
 select * from notifyusers;
 
--- Analytics 
+-- ## Analytics 
+
+-- ### Report per Questionnaire
 
 select * from questionnaires;
 
 select questionnaires.id, avg(perf_compile) as perf_compile from questionnaires;
+
+select * from questionnaires;
 
 SELECT 
   survey_id as id,
@@ -105,5 +110,33 @@ SELECT
   round((sum(verdict::boolean::integer)::integer::float / count(*) * 100)::numeric,0) as verdict
 FROM questionnaires GROUP BY survey_id ORDER BY survey_id;
 
+-- ### Report per Questionnaire and MasterImage
+
+SELECT  
+  survey_id as id,
+  survey_id, 
+  masterimage_id,
+  count(*) as count,
+  round(avg(perf_compile),1) as perf_compile,
+  round(avg(perf_app),1) as perf_app,
+  round(avg(sys_stability),1) as sys_stability,
+  round(avg(rdp_perf),1) as rdp_perf,
+  round(avg(rdp_stability),1) as rdp_stability,
+  round((sum(conf_size_ram::boolean::integer)::integer::float / count(*) * 100)::numeric,0)as conf_size_ram,
+  round((sum(conf_size_diskc::boolean::integer)::integer::float / count(*) * 100)::numeric,0) as conf_size_diskc,
+  round((sum(conf_size_diskd::boolean::integer)::integer::float / count(*) * 100)::numeric,0) as conf_size_diskd,
+  round((sum(toolset_general::boolean::integer)::integer::float / count(*) * 100)::numeric,0) as toolset_general,
+  round((sum(toolset_completeness::boolean::integer)::integer::float / count(*) * 100)::numeric,0) as toolset_completeness,
+  round(avg(usage),0) as usage,
+  round((sum(fallback::boolean::integer)::integer::float / count(*) * 100)::numeric,0) as fallback,
+  round((sum(verdict::boolean::integer)::integer::float / count(*) * 100)::numeric,0) as verdict
+FROM questionnaires LEFT OUTER JOIN virtualdesktops on questionnaires.virtualdesktop_id = virtualdesktops.id GROUP BY survey_id, masterimage_id ORDER BY survey_id, masterimage_id; 
+
+SELECT * from virtualdesktops;
+
+SELECT * from masterimages;
+
+SELECT * from users;
 
 
+SELECT * from reportbysurveybymasterimages;

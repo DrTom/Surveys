@@ -18,6 +18,15 @@ CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
 
 SET search_path = public, pg_catalog;
 
+--
+-- Name: is_greater(anyelement, anyelement); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION is_greater(anyelement, anyelement) RETURNS boolean
+    LANGUAGE sql
+    AS $_$ SELECT $1 > $2; $_$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -159,6 +168,14 @@ CREATE SEQUENCE questionnaires_id_seq
 --
 
 ALTER SEQUENCE questionnaires_id_seq OWNED BY questionnaires.id;
+
+
+--
+-- Name: reportbysurveybymasterimages; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW reportbysurveybymasterimages AS
+    SELECT questionnaires.survey_id AS id, questionnaires.survey_id, virtualdesktops.masterimage_id, count(*) AS count, round(avg(questionnaires.perf_compile), 1) AS perf_compile, round(avg(questionnaires.perf_app), 1) AS perf_app, round(avg(questionnaires.sys_stability), 1) AS sys_stability, round(avg(questionnaires.rdp_perf), 1) AS rdp_perf, round(avg(questionnaires.rdp_stability), 1) AS rdp_stability, round((((((sum((questionnaires.conf_num_cpu)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS conf_num_cpu, round((((((sum((questionnaires.conf_size_ram)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS conf_size_ram, round((((((sum((questionnaires.conf_size_diskc)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS conf_size_diskc, round((((((sum((questionnaires.conf_size_diskd)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS conf_size_diskd, round((((((sum((questionnaires.toolset_general)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS toolset_general, round((((((sum((questionnaires.toolset_completeness)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS toolset_completeness, round(avg(questionnaires.usage), 0) AS usage, round((((((sum((questionnaires.fallback)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS fallback, round((((((sum((questionnaires.verdict)::integer))::integer)::double precision / (count(*))::double precision) * (100)::double precision))::numeric, 0) AS verdict FROM (questionnaires LEFT JOIN virtualdesktops ON ((questionnaires.virtualdesktop_id = virtualdesktops.id))) GROUP BY questionnaires.survey_id, virtualdesktops.masterimage_id ORDER BY questionnaires.survey_id, virtualdesktops.masterimage_id;
 
 
 --
@@ -398,3 +415,5 @@ INSERT INTO schema_migrations (version) VALUES ('20110405090945');
 INSERT INTO schema_migrations (version) VALUES ('20110409101201');
 
 INSERT INTO schema_migrations (version) VALUES ('20110412193013');
+
+INSERT INTO schema_migrations (version) VALUES ('20110503121717');
