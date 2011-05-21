@@ -11,7 +11,7 @@
   %fieldset
     %h2 About
     = f.input :user, :as => :select, :collection => [[user.uid,user.id]], :include_blank => false
-    = f.input :survey, :include_blank => false
+    = f.input :survey, :include_blank => false, :collection => Opensurvey.all
     = f.input :virtualdesktop, :include_blank => false, :collection => @loggedin_user.virtualdesktops, :hint => "If you own multiple desktops: select the one you use most."
 
   %fieldset

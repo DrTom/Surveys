@@ -25,9 +25,9 @@ class SurveysController < ApplicationController
 
   def close 
     @survey = Survey.find(params[:id])
-    if @Survey.closeable?
+    if @survey.closeable?
       begin
-        @Survey.close! 
+        @survey.close! 
       rescue Exception => e
         flash[:notice] = e.message
       end

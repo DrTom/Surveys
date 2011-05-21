@@ -12,7 +12,7 @@ class VirtualdesktopsController < ApplicationController
   # GET /virtualdesktops
   # GET /virtualdesktops.xml
   def index
-    @virtualdesktops = Virtualdesktop.all
+    @virtualdesktops = Virtualdesktop.order(:name)
 
     respond_to do |format|
       format.html # index.html.erb

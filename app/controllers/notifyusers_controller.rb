@@ -9,6 +9,7 @@ class NotifyusersController < ApplicationController
   def index
     @opensurvey = Opensurvey.first 
     @notifyusers = Notifyuser.all
+    @clients = User.where(:is_client => true)
   end
 
 end

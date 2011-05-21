@@ -2,19 +2,19 @@
   .summary_survey
     %h1= "Summary for #{@reportbysurvey.survey.name}"
 
-    = render 'reporttable', :reports => [@reportbysurvey]
+    = render 'shared/reporttable', :reports => [@reportbysurvey]
 
 .summary
   .summary_images
     %h2 Summary by Master-Image
 
-    = render 'reporttable', :reports => @reportbysurveybymasterimages
+    = render 'shared/reporttable', :reports => @reportbysurveybymasterimages
     
 
 .individual
   %h2 Individual Reports
 
-  = render 'reporttable', :reports => @questionnaires
+  = render 'shared/reporttable', :reports => @questionnaires
 
 .comments
   %h3 Comments

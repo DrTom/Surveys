@@ -13,7 +13,7 @@ class Survey < ActiveRecord::Base
   end
 
   def close!
-    if closeable?
+    if self.closeable?
       self.closed_at= DateTime.now
       self.save
     else

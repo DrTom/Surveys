@@ -39,7 +39,6 @@
 
 
 
-
 %table 
   %tr
     - report = reports.first
@@ -118,7 +117,11 @@
   - reports.each do |report|
     - if report
       %tr
-        %td.survey= link_to report.survey.name, report_path(report.survey)  
+        -# show links onley form reports index action
+        -if @controller.controller_name == "reports" && @controller.action_name == "index" 
+          %td.survey= link_to report.survey.name, report_path(report.survey)  
+        -else
+          %td.survey= report.survey.name 
         -if report.respond_to? :masterimage
           %td.user= report.masterimage.name
         -if report.respond_to? :user

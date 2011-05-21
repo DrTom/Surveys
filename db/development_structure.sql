@@ -9,23 +9,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET escape_string_warning = off;
 
---
--- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
---
-
-CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
-
-
 SET search_path = public, pg_catalog;
-
---
--- Name: is_greater(anyelement, anyelement); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION is_greater(anyelement, anyelement) RETURNS boolean
-    LANGUAGE sql
-    AS $_$ SELECT $1 > $2; $_$;
-
 
 SET default_tablespace = '';
 
@@ -50,8 +34,8 @@ CREATE TABLE masterimages (
 CREATE SEQUENCE masterimages_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -158,8 +142,8 @@ CREATE VIEW notifyusers AS
 CREATE SEQUENCE questionnaires_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -202,8 +186,8 @@ CREATE TABLE schema_migrations (
 CREATE SEQUENCE surveys_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -221,8 +205,8 @@ ALTER SEQUENCE surveys_id_seq OWNED BY surveys.id;
 CREATE SEQUENCE users_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -240,8 +224,8 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 CREATE SEQUENCE virtualdesktops_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -394,8 +378,6 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO schema_migrations (version) VALUES ('20110316082803');
-
 INSERT INTO schema_migrations (version) VALUES ('20110314111300');
 
 INSERT INTO schema_migrations (version) VALUES ('20110314120152');
@@ -416,4 +398,4 @@ INSERT INTO schema_migrations (version) VALUES ('20110409101201');
 
 INSERT INTO schema_migrations (version) VALUES ('20110412193013');
 
-INSERT INTO schema_migrations (version) VALUES ('20110503121717');
+INSERT INTO schema_migrations (version) VALUES ('20110503181717');

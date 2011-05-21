@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require 'parseexcel'
+require 'yaml'
+
+workbook = Spreadsheet::ParseExcel.parse("data_import/test_import.xls")
+worksheet = workbook.worksheet(0)
+
+array = []
+
+worksheet.each(1) do |row|
+
+  desk = row.at(0).to_s("latin1")
+  master = row.at(3).to_s("latin1")
+  uid = row.at(4).to_s("latin1").match(/u[^;]*/).to_s
+
+
+  #array << [desk,master,uid]
+
+  master_image = Masterimage.find_or_create_by_name(master)
+  user = User.find_or_create_by_uid(uid)
+  
+  if ! Virtualdesktop.find_by_name(desk)
+    v = Virtualdesktop.create(:user => user, :masterimage=> master_image, :name => desk )
+    puts "created: #{v}"
+  end
+
+end
+
+# puts YAML::dump(array)
