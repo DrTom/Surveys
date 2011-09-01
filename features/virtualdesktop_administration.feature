@@ -39,7 +39,7 @@ Feature: User Administration
     When I follow "Virtualdesktops"
     Then I should see a link "Rundown"
     When I follow "Rundown"
-    And I acknowledge the prompt
+    #    And I acknowledge the prompt
     Then I should see "is down."
     When I follow "Virtualdesktops"
     Then I should see "down"

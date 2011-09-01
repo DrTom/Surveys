@@ -36,9 +36,9 @@ production.
 
 #### Views
 
-There exist models which are purely based on SQL-views. E.g. the computation
-of the reports is done within the database (by simple SQL and
-using existing functions) and modeled as a sql-view.
+There exists models which are purely based on SQL-views. E.g. the
+computation of the reports is done within the database (by simple
+SQL and using existing functions) and modeled as a sql-view.
 
 This will run as it is on Postgres only. It could be made to run
 on MySQL with a little bit of more effort. I don't know how
@@ -76,7 +76,7 @@ it is not!
 
 ### Deployment
 
-We deploy and Git and Passenger and run it ourself with RVM and
+We deploy with Git and Passenger and run it ourself with RVM and
 Postgres on Linux (Debian derivative). I'd rather recommend to use
 Heroku if one is allowed to do so.
 

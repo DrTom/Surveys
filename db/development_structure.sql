@@ -9,6 +9,13 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET escape_string_warning = off;
 
+--
+-- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
+--
+
+CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
+
+
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
@@ -34,8 +41,8 @@ CREATE TABLE masterimages (
 CREATE SEQUENCE masterimages_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -142,8 +149,8 @@ CREATE VIEW notifyusers AS
 CREATE SEQUENCE questionnaires_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -186,8 +193,8 @@ CREATE TABLE schema_migrations (
 CREATE SEQUENCE surveys_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -205,8 +212,8 @@ ALTER SEQUENCE surveys_id_seq OWNED BY surveys.id;
 CREATE SEQUENCE users_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -224,8 +231,8 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 CREATE SEQUENCE virtualdesktops_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 

@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
    end
 
   def authorize
-    redirect_to main_url, :notice => "You not allowed to use this page." unless @loggedin_user and @loggedin_user.is_admin
+    redirect_to main_url, :notice => "You are not allowed to use this page." unless @loggedin_user and @loggedin_user.is_admin
   end
 
 end

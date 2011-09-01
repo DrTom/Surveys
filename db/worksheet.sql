@@ -83,7 +83,7 @@ select * from notifyusers;
 
 -- ## Analytics 
 
--- ### Report per Questionnaire
+-- ### Report per Survey 
 
 select * from questionnaires;
 
@@ -110,7 +110,7 @@ SELECT
   round((sum(verdict::boolean::integer)::integer::float / count(*) * 100)::numeric,0) as verdict
 FROM questionnaires GROUP BY survey_id ORDER BY survey_id;
 
--- ### Report per Questionnaire and MasterImage
+-- ### Report per Survey and MasterImage
 
 SELECT  
   survey_id as id,

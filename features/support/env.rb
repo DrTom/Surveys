@@ -47,4 +47,4 @@ ActionController::Base.allow_rescue = false
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
 DatabaseCleaner.strategy = :transaction
 
-Capybara.default_driver = :selenium
+#Capybara.default_driver = :selenium
